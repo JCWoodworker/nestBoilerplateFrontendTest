@@ -6,7 +6,11 @@ interface LoginPayload {
 	password: string
 }
 
-const Login: React.FC = () => {
+interface LoginProps {
+	apiDomain: string | undefined
+}
+
+const Login: React.FC<LoginProps> = ({ apiDomain }) => {
 	const [loginPayload, setLoginPayload] = useState<LoginPayload>({
 		username: "",
 		password: "",
@@ -19,19 +23,17 @@ const Login: React.FC = () => {
 			...loginPayload,
 		}
 		await axios
-			.post("http://localhost:3000/auth/login", payload)
+			.post(`${apiDomain}/auth/login`, payload)
 			.then((response) => {
-				setMessage(
-					`JC's FrontendStatus: ${response.data.status}`
-				)
+				setMessage(`JC's FrontendStatus: ${response.data.status}`)
 			})
 			.catch((error) => {
 				if (error.response.status === 401) {
-					setMessage(`UNAUTHORIZED!!  Your credentials are wrong you fucking twat!`)
+					setMessage(`UNAUTHORIZED!!  Your credentials are wrong!`)
 				} else if (error.response.status === 404) {
-					setMessage(`UNAUTHORIZED!!  Your credentials are wrong you fucking twat!`)
+					setMessage(`UNAUTHORIZED!!  Your credentials are wrong!`)
 				} else if (error.response.status === 500) {
-					setMessage(`UNAUTHORIZED!!  Your credentials are wrong you fucking twat!`)
+					setMessage(`UNAUTHORIZED!!  Your credentials are wrong!`)
 				} else {
 					setMessage(`JC's Frontend Error: ${error.message}`)
 				}
@@ -44,7 +46,7 @@ const Login: React.FC = () => {
 	return (
 		<div>
 			<h1>Login</h1>
-			<form onSubmit={submitLogin}>
+			<form onSubmit={submitLogin} className="login-form">
 				<label>
 					Username
 					<input
