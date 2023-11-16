@@ -41,7 +41,6 @@ const Login: React.FC<LoginProps> = ({ apiDomain }) => {
 	}
 
 	useEffect(() => {
-		console.log(loginPayload)
 	}, [loginPayload])
 	return (
 		<div>

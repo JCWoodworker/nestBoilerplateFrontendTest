@@ -18,7 +18,6 @@ function App() {
 		const response = await axios.get(apiDomain)
 		setData(response.data)
 	}
-	console.log(apiDomain)
 
 	useEffect(() => {
 		fetchMainPage()
